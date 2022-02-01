@@ -15,12 +15,16 @@ public class Program2 {
 		departmentDAO.insert(department);
 		System.out.println("Insert new Department " + department.getName() +" with id = " + department.getId());
 		
+		System.out.println("=== TEST 3: Department findById ===");
+		Department dep =  departmentDAO.findById(3);
+		System.out.println(dep);
+		
 		System.out.println("=== TEST 2: Department Update ===");
-		department = departmentDAO.findById(2);
-		department.setName("Eletronics ABC");
-		departmentDAO.update(department);
+		dep = departmentDAO.findById(11);
+		dep.setName("Lost and Founds");
+		departmentDAO.update(dep);
 		System.out.println("Update completed");
-
+		
 	}
 
 }
