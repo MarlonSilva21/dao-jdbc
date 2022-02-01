@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
@@ -87,7 +88,7 @@ public class DepartmentDaoJDBC implements DepartmentDAO{
 	@Override
 	public void deleteById(Integer id) {
 		
-PreparedStatement st = null;
+		PreparedStatement st = null;
 		
 		try {
 			st = conn.prepareStatement("DELETE FROM department WHERE Id = ?");
@@ -155,8 +156,31 @@ PreparedStatement st = null;
 
 	@Override
 	public List<Department> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			st = conn.prepareStatement("SELECT department.* FROM department");
+			rs = st.executeQuery();
+			
+			List<Department> listDepartments = new ArrayList<>();
+			
+			while (rs.next()) {
+				
+				Department department = instantiateDepartment(rs);
+				listDepartments.add(department);
+			}
+			return listDepartments;
+			
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 }
